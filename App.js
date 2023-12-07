@@ -10,7 +10,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState, useEffect, useCallback } from "react";
 import GameScreen from "./screens/GameScreen";
-import Colors from "./constants/colors";
+import AppColors from "./constants/AppColors";
 import GameOverScreen from "./screens/GameOverScreen";
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -20,6 +20,7 @@ export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(true);
   const [appIsReady, setAppIsReady] = useState(false);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   useEffect(() => {
     async function prepare() {
@@ -33,7 +34,7 @@ export default function App() {
         });
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 100));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -76,18 +77,23 @@ export default function App() {
     setGameIsOver(true);
   }
 
+  function startNewGameHandler(){
+    setUserNumber(null);
+    setGuessRounds(0);
+  }
+
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} onGameIsOver={gameIsOverHandler}/>;
+    screen = <GameScreen userNumber={userNumber} onGameIsOver={gameIsOverHandler} />;
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>;
   }
 
   return (
     <LinearGradient
-      colors={[Colors.primary400, Colors.accent500]}
-      style={styles.rootScreen} 
+      colors={[AppColors.primary400, AppColors.accent500]}
+      style={styles.rootScreen}
       onLayout={onLayoutRootView}
     >
       <ImageBackground

@@ -1,7 +1,7 @@
 import { View, TextInput, StyleSheet, Alert, Text } from "react-native";
 import React, { useState } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
-import Colors from "../constants/colors";
+import AppColors from "../constants/AppColors";
 import Title from "../components/ui/Title";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     fontSize: 32,
-    borderBottomColor: Colors.primary500,
+    borderBottomColor: AppColors.primary500,
     borderBottomWidth: 2,
-    color: Colors.primary500,
+    color: AppColors.primary500,
     marginVertical: 8,
     fontWeight: "bold",
   },
